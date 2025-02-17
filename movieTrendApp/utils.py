@@ -21,7 +21,7 @@ integration_data = {
             "app_url": f"{settings.BASE_URL}",
             "background_color": "#000000"
         },
-        "integration_category": "Entertainment",
+        "integration_category": "Monitoring & Logging",
         "integration_type": "interval",
         "is_active": True,
         "output": [
