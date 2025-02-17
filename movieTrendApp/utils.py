@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 
+
 integration_data = {
     "data": {
         "date": {
@@ -15,9 +16,9 @@ integration_data = {
         },
         "descriptions": {
             "app_description": "Fetches and provides trending movies from the past week.",
-            "app_logo": f"{settings.STATIC_URL}/logo/logo.png",
+            "app_logo": f"{settings.BASE_URL}{settings.STATIC_URL}logo/logo.jpeg",
             "app_name": "MovieTrend",
-            "app_url": "https://your-movie-trend-app.com",
+            "app_url": f"{settings.BASE_URL}",
             "background_color": "#000000"
         },
         "integration_category": "Entertainment",
@@ -71,7 +72,7 @@ integration_data = {
                 "options": ["en", "fr", "es", "de", "it", "ja", "zh"]
             }
         ],
-        "tick_url": "https://your-api.com/tick/",
+        "tick_url": f"{settings.BASE_URL}/tick/",
         "target_url": None
     }
 }

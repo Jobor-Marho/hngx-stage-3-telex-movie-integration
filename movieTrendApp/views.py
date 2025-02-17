@@ -10,7 +10,7 @@ from .utils import (integration_data, generate_img_url, get_top_movies, send_tel
 @permission_classes([AllowAny])
 def get_integration_json(request):
     """Return the integration JSON used by telex"""
-    return Response(data=integration_data, status=status.HTTP_200_OK, content_type="application/json")
+    return Response(data=integration_data, status=status.HTTP_200_OK)
 
 
 
