@@ -22,6 +22,7 @@ integration_data = {
             "background_color": "#000000"
         },
         "integration_category": "Monitoring & Logging",
+        "author": "Edric Oghenejobor",
         "integration_type": "interval",
         "is_active": True,
         "output": [
