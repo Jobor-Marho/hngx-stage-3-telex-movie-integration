@@ -1,4 +1,4 @@
-```markdown
+<img width="1440" alt="Screenshot 2025-02-18 at 17 32 02" src="https://github.com/user-attachments/assets/351323dd-7357-4901-a9c5-0660ef982e31" />
 # MovieTrend Integration for Telex
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
@@ -36,7 +36,7 @@ movie_trend/
         ├── integrations.json    # Telex integration configuration
     ├── manage.py                 # Django management script
     ├── requirements.txt          # Project dependencies
-```
+
 
 ## Installation & Setup
 
@@ -107,7 +107,9 @@ python manage.py test
 
 *(Include screenshots of the integration in a Telex channel here)*
 > Example:
->
+><img width="1440" alt="Screenshot 2025-02-18 at 17 31 45" src="https://github.com/user-attachments/assets/1cbac042-e209-41d2-87d8-93bd51d7ded7" />
+
+<img width="1440" alt="Screenshot 2025-02-18 at 17 32 02" src="https://github.com/user-attachments/assets/5f793023-78a0-4f17-9b70-9e60c587b411" />
 
 ---
 
