@@ -124,7 +124,7 @@ def get_top_movies(limit: int = 10):
 def send_telex_data(url: str, movies: list):
     try:
         # Prepare the message for Telex (customize as needed)
-        message = f"Top {len(movies)} Trending Movies for the Week:\n"
+        message = f"🎬🍿 Top {len(movies)} Trending Movies for the Week 🎬🍿:\n"
         for movie in movies:
             message += f"\n{movies.index(movie)+1}. {movie['title']} - {movie['rating']}\n\n"
             message += f"Overview: {movie['overview']}\n\n"
