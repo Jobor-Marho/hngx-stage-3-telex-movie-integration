@@ -53,7 +53,7 @@ movie_trend/
 3. **Set up TMDb API Key**:
    - Add your API key to `settings.py`:
      ```python
-     TMDB_API_KEY = 'your_api_key_here'  # Replace with your key
+     TMDB_API_KEY = 'your_api_key_here'  # Replace with your API key
      ```
    - *For production, use environment variables instead of hardcoding.*
 
