@@ -1,4 +1,3 @@
-<img width="1440" alt="Screenshot 2025-02-18 at 17 32 02" src="https://github.com/user-attachments/assets/351323dd-7357-4901-a9c5-0660ef982e31" />
 # MovieTrend Integration for Telex
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
