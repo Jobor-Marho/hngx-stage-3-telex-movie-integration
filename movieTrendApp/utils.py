@@ -48,7 +48,7 @@ integration_data = {
                 "type": "text",
                 "description": "Crontab format for scheduling the fetch operation.",
                 "required": True,
-                "default": "0 0 * * 0"  # Runs every Sunday at midnight
+                "default": "* * * * *" #"default": "0 0 * * 0"  # Runs every Sunday at midnight
             },
             {
                 "label": "TMDb API Key",
