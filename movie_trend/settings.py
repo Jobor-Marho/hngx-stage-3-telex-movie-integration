@@ -154,7 +154,7 @@ MDBURL = os.environ.get("MDBURL")
 CONFIG_URL = os.environ.get("CONFIG_URL")
 HEADERS = {
     "Authorization": f"Bearer {BEARER_KEY}",
-    "Content-Type": f"{os.environ.get("CONTENT_TYPE")}"
+    "Content-Type": f"{os.environ.get('CONTENT_TYPE')}"
 }
 
 BASE_URL = os.environ.get("BASE_URL")
