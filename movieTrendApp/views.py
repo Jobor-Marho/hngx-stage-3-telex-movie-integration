@@ -1,5 +1,6 @@
 """View for Accessing Integration Json and Tick Endoipoint"""
 from rest_framework import status
+from django.http import JsonResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -8,9 +9,10 @@ from .utils import (integration_data, generate_img_url, get_top_movies, send_tel
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def get_integration_json(request):
-    """Return the integration JSON used by telex"""
-    return Response(data=integration_data, status=status.HTTP_200_OK)
+def get_integration_json(request) -> JsonResponse:
+    """Return the integration JSON to be used by telex"""
+    return JsonResponse(data=integration_data, status=status.HTTP_200_OK)
+
 
 
 
