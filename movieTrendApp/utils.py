@@ -74,6 +74,7 @@ integration_data = {
             }
         ],
         "tick_url": f"{settings.BASE_URL}/tick/",
+        "target_url": None
     }
 }
 
