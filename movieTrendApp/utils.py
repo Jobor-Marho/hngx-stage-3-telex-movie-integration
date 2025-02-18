@@ -115,6 +115,7 @@ def get_top_movies(limit: int = 10):
 
     if response.status_code == 200:
         movies = response.json().get("results", [])
+
         return [True, movies[:limit]]  # Return only the requested number of movies
 
     return [False]
@@ -123,7 +124,11 @@ def get_top_movies(limit: int = 10):
 def send_telex_data(url: str, movies: list):
     try:
         # Prepare the message for Telex (customize as needed)
-        message = f"Trending Movies:\n" + "\n".join([f"{movie['title']} - {movie['rating']}" for movie in movies])
+        message = f"Top {len(movies)} Trending Movies for the Week:\n"
+        for movie in movies:
+            message += f"\n{movie['title']} - {movie['rating']}\n\n"
+            message += f"Overview: {movie['overview']}\n\n"
+            message += f"Image: {movie['cover_photo']}\n\n\n"
 
         # Build the payload in the correct format for Telex
         data = {
@@ -138,7 +143,7 @@ def send_telex_data(url: str, movies: list):
 
 
         # Check if the request was successful
-        if response.status_code == 200:
+        if response.status_code >= 200:
             return True  # Successfully sent data
         else:
             # Log error or raise exception

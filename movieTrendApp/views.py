@@ -23,13 +23,16 @@ def telex_tick(request):
     Handles tick_url requests from Telex. Fetches trending movies and sends them to Telex.
     """
     telex_data = request.data
+
     return_url = telex_data.get("return_url")  # Telex sends this URL for posting results
+
 
     # Get the number of movies to fetch (default to 10)
     num_movies = int(telex_data.get("num_movies", 10))
+    print(num_movies)
 
     # Fetch the top movies and handle any errors
-    success, movies = get_top_movies(num_movies)
+    success, movies = get_top_movies(limit=num_movies)
 
     if success:
         # Extract relevant movie details
@@ -42,6 +45,7 @@ def telex_tick(request):
             }
             for movie in movies
         ]
+        
 
         # Send data back to Telex using return_url
         send_success = send_telex_data(url=return_url, movies=trending_movies)
