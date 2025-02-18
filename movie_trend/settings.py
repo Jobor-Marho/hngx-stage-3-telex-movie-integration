@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-i-&nl-u+sm@iprh*ou7ac-u3_r=epmt$s_uhq$e5ug^-od-zkx"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
@@ -104,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # CORS Config
-# CORS_ALLOWED_ORIGINS = "https://introapp-ybyf.onrender.com"
-# USE_X_FORWARDED_HOST = True
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS")
+USE_X_FORWARDED_HOST = os.environ.get("USE_X_FORWARDED_HOST")
+CORS_ORIGIN_ALLOW_ALL = os.environ.get("CORS_ORIGIN_ALLOW_ALL")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -144,12 +149,9 @@ REST_FRAMEWORK = {
     ],
 }
 
-BEARER_KEY="eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODE5MDc2ZWRmZTdkM2FkNTM5ZGRiZjYzMGQwYjM3YSIsIm5iZiI6MTY3NzE1NjIwMi4wNDMsInN1YiI6IjYzZjc1ZjZhNjhiMWVhMDA4MmY2MGY1YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ws-HuGlXg1Tu_rcTrdZPj_2h9mXy6B9G80NRc-VmL1Y"
-MDBURL = "https://api.themoviedb.org/3/trending/movie/week?language=en-US"
-CONFIG_URL = 'https://api.themoviedb.org/3/configuration'
-HEADERS = {
-    'Authorization': f'Bearer {BEARER_KEY}',
-    'Content-Type': 'application/json'
-}
+BEARER_KEY=os.environ.get("BEARER_KEY")
+MDBURL = os.environ.get("MDBURL")
+CONFIG_URL = os.environ.get("CONFIG_URL")
+HEADERS = os.environ.get("HEADERS")
 
-BASE_URL = "https://telex-movie-integrations.onrender.com"
+BASE_URL = os.environ.get("BASE_URL")
