@@ -1,7 +1,7 @@
 """Utilities for my app"""
 
 from datetime import date
-import requests
+import httpx
 from django.conf import settings
 from django.http import HttpRequest
 
@@ -32,27 +32,13 @@ def get_integration_data(request: HttpRequest):
                 "app_url": f"{base_url}",
                 "background_color": "#000000"
             },
-            "integration_category": "Monitoring & Logging",
             "author": "Edric Oghenejobor",
             "integration_type": "interval",
-            "is_active": True,
-            "output": [
-                {
-                    "label": "Trending Movies",
-                    "value": True
-                }
-            ],
             "key_features": [
                 "Fetches trending movies weekly",
                 "Provides movie titles, ratings, descriptions and image url",
                 "Sends movie data to Telex for processing"
             ],
-            "permissions": {
-                "monitoring_user": {
-                    "always_online": True,
-                    "display_name": "Movie Tracker"
-                }
-            },
             "settings": [
                 {
                     "label": "Interval",
@@ -90,9 +76,10 @@ def get_integration_data(request: HttpRequest):
     }
 
 
-def generate_img_url(poster_path: str) -> str:
+
+async def generate_img_url(poster_path: str) -> str:
     """
-    Generates a complete image URL for the given poster path.
+    Asynchronously generates a complete image URL for the given poster path.
 
     Args:
         poster_path (str): Poster path for the movie.
@@ -101,21 +88,25 @@ def generate_img_url(poster_path: str) -> str:
         str: URL for the image or an error message.
     """
     try:
-        response = requests.get(settings.CONFIG_URL, headers=settings.HEADERS)
-        response.raise_for_status()
-        config_data = response.json()
+        async with httpx.AsyncClient() as client:
+            response = await client.get(settings.CONFIG_URL, headers=settings.HEADERS)
+            response.raise_for_status()
+            config_data = response.json()
+
         base_url = config_data.get("images", {}).get("base_url", "")
         poster_sizes = config_data.get("images", {}).get("poster_sizes", [])
         size = poster_sizes[4] if len(poster_sizes) > 4 else poster_sizes[0] if poster_sizes else ""
+
         if base_url and size and poster_path:
             return f"{base_url}{size}{poster_path}"
         return "Invalid URL configuration."
-    except requests.exceptions.RequestException as e:
+    except httpx.HTTPError as e:
         return {"error": f"Error generating image URL: {str(e)}"}
 
-def get_top_movies(telex_data):
+
+async def get_top_movies(telex_data):
     """
-    Fetch trending movies with a customizable limit.
+    Asynchronously fetch trending movies with a customizable limit.
 
     Args:
         telex_data (dict): Data received from Telex, including preferences and API details.
@@ -130,7 +121,7 @@ def get_top_movies(telex_data):
     num_movies = int(telex_data.get("num_movies", 10))  # Get number of movies to fetch
 
     headers = {
-        "Content-Type": f'{settings.CONTENT_TYPE}'
+        "Content-Type": f"{settings.CONTENT_TYPE}"
     }
 
     if api_key:
@@ -141,23 +132,34 @@ def get_top_movies(telex_data):
         url = f"{settings.MDBURL}language={preferred_language}"
         headers["Authorization"] = f"Bearer {settings.BEARER_KEY}"
 
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-
-        movies = response.json().get("results", [])
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, headers=headers)
+            response.raise_for_status()
+            movies = response.json().get("results", [])
 
         return [True, movies[:num_movies], return_url]  # Return only the requested number of movies
 
-    return [False, [], return_url]
+    except httpx.HTTPError:
+        return [False, [], return_url]
 
 
-def send_telex_data(url: str, movies: list):
+async def send_telex_data(url: str, movies: list):
+    """
+    Asynchronously sends trending movie data to Telex.
+
+    Args:
+        url (str): Telex API endpoint.
+        movies (list): List of movie data.
+
+    Returns:
+        bool: True if successfully sent, False otherwise.
+    """
     try:
-        # Prepare the message for Telex (customize as needed)
+        # Prepare the message for Telex
         message = f"🎬🍿 Top {len(movies)} Trending Movies for the Week 🎬🍿:\n"
-        for movie in movies:
-            message += f"\n{movies.index(movie)+1}. {movie['title']} - {movie['rating']}\n\n"
+        for i, movie in enumerate(movies, start=1):
+            message += f"\n{i}. {movie['title']} - {movie.get('rating', 'N/A')}\n\n"
             message += f"Overview: {movie['overview']}\n\n"
             message += f"Image Url: {movie['cover_photo']}\n\n\n"
 
@@ -166,20 +168,14 @@ def send_telex_data(url: str, movies: list):
             "message": message,
             "username": "Movie Trend",
             "event_name": "Trending Movies Fetch",
-            "status": "success"  # Or "error" based on the outcome
+            "status": "success"
         }
 
-        # Make the POST request with the correct format
-        response = requests.post(url, json=data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=data)
 
+        return response.status_code >= 200
 
-        # Check if the request was successful
-        if response.status_code >= 200:
-            return True  # Successfully sent data
-        else:
-            # Log error or raise exception
-            return False
-    except requests.exceptions.RequestException as e:
-        # Log the error (or re-raise)
+    except httpx.HTTPError as e:
         print(f"Error sending data to Telex: {e}")
         return False
