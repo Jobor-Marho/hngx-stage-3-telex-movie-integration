@@ -34,6 +34,7 @@ def get_integration_data(request: HttpRequest):
             },
             "author": "Edric Oghenejobor",
             "integration_type": "interval",
+            "integration_category": "Monitoring & Logging",
             "key_features": [
                 "Fetches trending movies weekly",
                 "Provides movie titles, ratings, descriptions and image url",
