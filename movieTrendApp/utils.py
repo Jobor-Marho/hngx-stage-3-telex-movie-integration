@@ -41,7 +41,25 @@ def get_integration_data(request: HttpRequest):
             "integration_type": "interval",
             "integration_category": "Monitoring & Logging",
             "settings": [
-                
+                # {
+                #     "label": "TMDb API Key",
+                #     "type": "text",
+                #     "required": False,
+                #     "default": ""
+                # },
+                {
+                    "label": "Number of Trending Movies",
+                    "type": "number",
+                    "required": False,
+                    "default": 10
+                },
+                {
+                    "label": "Preferred Language",
+                    "type": "dropdown",
+                    "required": False,
+                    "default": "en",
+                    "options": ["en", "fr", "es", "de", "it", "ja", "zh"]
+                },
                 {
                     "label": "interval",
                     "type": "text",
