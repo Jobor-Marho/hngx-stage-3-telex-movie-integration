@@ -40,7 +40,7 @@ def telex_tick(request):
         send_success = async_to_sync(send_telex_data)(url, movies=trending_movies)
 
         if send_success:
-            return Response(data={"status": "success", "message": "Trending movies sent to Telex"}, status=status.HTTP_200_OK)
+            return Response(data={"status": "success", "message": "Trending movies sent to Telex"}, status=status.HTTP_202_ACCEPTED)
 
         return Response(data={"status": "error", "message": "Failed to send movie data to Telex"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

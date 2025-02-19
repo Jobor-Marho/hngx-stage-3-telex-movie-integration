@@ -15,5 +15,5 @@ urlpatterns = [
     path("integration.json", get_integration_json, name="telex_integration"),
 
     # Telex tick endpoint to fetch and send trending movies
-    path("tick/", telex_tick, name="telex_tick"),
+    path("tick", telex_tick, name="telex_tick"),
 ]

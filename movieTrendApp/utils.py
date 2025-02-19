@@ -33,45 +33,41 @@ def get_integration_data(request: HttpRequest):
                 "background_color": "#000000"
             },
             "author": "Edric Oghenejobor",
-            "integration_type": "interval",
-            "integration_category": "Monitoring & Logging",
             "key_features": [
                 "Fetches trending movies weekly",
                 "Provides movie titles, ratings, descriptions and image url",
                 "Sends movie data to Telex for processing"
             ],
+            "integration_type": "interval",
+            "integration_category": "Monitoring & Logging",
             "settings": [
-                {
-                    "label": "Interval",
-                    "type": "text",
-                    "description": "Crontab format for scheduling the fetch operation.",
-                    "required": True,
-                    "default": "* * * * *"  # Default to every minute
-                },
                 {
                     "label": "TMDb API Key",
                     "type": "text",
-                    "description": "API key for accessing TMDb movie data.",
                     "required": False,
                     "default": ""
                 },
                 {
                     "label": "Number of Trending Movies",
                     "type": "number",
-                    "description": "How many trending movies to fetch (e.g., 5, 10, 20).",
                     "required": False,
                     "default": 10
                 },
                 {
                     "label": "Preferred Language",
                     "type": "dropdown",
-                    "description": "Select the language for movie titles and descriptions.",
                     "required": False,
                     "default": "en",
                     "options": ["en", "fr", "es", "de", "it", "ja", "zh"]
-                }
+                },
+                {
+                    "label": "interval",
+                    "type": "text",
+                    "required": True,
+                    "default": "* * * * *"  # Default to every minute
+                },
             ],
-            "tick_url": f"{base_url}/tick/",
+            "tick_url": f"{base_url}/tick",
             "target_url": ""
         }
     }
