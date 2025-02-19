@@ -72,7 +72,7 @@ def get_integration_data(request: HttpRequest):
                 }
             ],
             "tick_url": f"{base_url}/tick/",
-            "target_url": None
+            "target_url": ""
         }
     }
 
