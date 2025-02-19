@@ -135,7 +135,7 @@ def get_top_movies(telex_data):
 
     if api_key:
         # Use API key if provided
-        url = f"{settings.USE_API_KEY_URL}api_key={api_key}&language={preferred_language}"
+        url = f"{settings.MDBURL}api_key={api_key}&language={preferred_language}"
     else:
         # Default to using Bearer token
         url = f"{settings.MDBURL}language={preferred_language}"
