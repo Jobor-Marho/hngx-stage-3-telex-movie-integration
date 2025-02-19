@@ -15,6 +15,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+def str_to_bool(value):
+    return str(value).lower() in ("true", "1", "yes")
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +31,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+DEBUG = str_to_bool(os.environ.get("DEBUG"))
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -109,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # CORS Config
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS")
-USE_X_FORWARDED_HOST = os.environ.get("USE_X_FORWARDED_HOST")
-CORS_ORIGIN_ALLOW_ALL = os.environ.get("CORS_ORIGIN_ALLOW_ALL")
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+USE_X_FORWARDED_HOST = str_to_bool(os.environ.get("USE_X_FORWARDED_HOST", "False"))
+CORS_ORIGIN_ALLOW_ALL = str_to_bool(os.environ.get("CORS_ORIGIN_ALLOW_ALL", "False"))
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -150,11 +154,14 @@ REST_FRAMEWORK = {
 }
 
 BEARER_KEY=os.environ.get("BEARER_KEY")
+USE_API_KEY_URL = os.environ.get("USE_API_KEY_URL")
 MDBURL = os.environ.get("MDBURL")
 CONFIG_URL = os.environ.get("CONFIG_URL")
 HEADERS = {
     "Authorization": f"Bearer {BEARER_KEY}",
     "Content-Type": f"{os.environ.get('CONTENT_TYPE')}"
 }
-
+CONTENT_TYPE ={os.environ.get('CONTENT_TYPE')}
 BASE_URL = os.environ.get("BASE_URL")
+
+
