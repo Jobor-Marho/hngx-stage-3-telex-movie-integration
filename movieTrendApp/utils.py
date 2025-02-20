@@ -48,13 +48,13 @@ def get_integration_data(request: HttpRequest):
                 #     "default": ""
                 # },
                 {
-                    "label": "Number of Trending Movies",
+                    "label": "number of trending movies",
                     "type": "number",
                     "required": False,
                     "default": 10
                 },
                 {
-                    "label": "Preferred Language",
+                    "label": "preferred language",
                     "type": "dropdown",
                     "required": False,
                     "default": "en",
@@ -64,7 +64,7 @@ def get_integration_data(request: HttpRequest):
                     "label": "interval",
                     "type": "text",
                     "required": True,
-                    "default": "*/5 * * * *"  # Default to every 5 minute
+                    "default": "* * * * *"  # Default to every 5 minute
                 },
             ],
             "tick_url": f"{base_url}/tick",
