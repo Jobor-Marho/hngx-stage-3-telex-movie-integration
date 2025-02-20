@@ -4,6 +4,7 @@ from datetime import date
 import httpx
 from django.conf import settings
 from django.http import HttpRequest
+import aiosmtplib
 
 
 def get_base_url(request: HttpRequest):
@@ -141,6 +142,8 @@ async def get_top_movies(telex_data):
         return [False, [], return_url]
 
 
+
+
 async def send_telex_data(url: str, movies: list):
     """
     Asynchronously sends trending movie data to Telex.
@@ -156,11 +159,11 @@ async def send_telex_data(url: str, movies: list):
         # Prepare the message for Telex
         message = f"🎬🍿 Top {len(movies)} Trending Movies for the Week 🎬🍿:\n"
         for i, movie in enumerate(movies, start=1):
-            message += f"\n{i}. {movie['title']} - {movie.get('rating', 'N/A')}\n\n"
-            message += f"Overview: {movie['overview']}\n\n"
-            message += f"Image Url: {movie['cover_photo']}\n\n\n"
+            message += f"\n{i}. {movie['title']} - {movie.get('rating', 'N/A')}\n"
+            message += f"Overview: {movie['overview']}\n"
+            message += f"Image URL: {movie.get('cover_photo', 'N/A')}\n\n"
 
-        # Build the payload in the correct format for Telex
+        # Payload for Telex
         data = {
             "message": message,
             "username": "Movie Trend",
@@ -168,11 +171,39 @@ async def send_telex_data(url: str, movies: list):
             "status": "success"
         }
 
+        # Send POST request to Telex API
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=data)
 
+        # Send Email Notification using aiosmtplib
+        await send_email_notification()
+
         return response.status_code >= 200
 
-    except httpx.HTTPError as e:
-        print(f"Error sending data to Telex: {e}")
+    except httpx.HTTPError as http_error:
+        print(f"Error sending data to Telex: {http_error}")
         return False
+
+
+async def send_email_notification():
+    """
+    Asynchronously sends an email notification using aiosmtplib.
+    """
+    message = (
+        "Subject: Telex Notification\n\n"
+        "Telex called your tick endpoint successfully."
+    )
+
+    try:
+        await aiosmtplib.send(
+            message,
+            hostname="smtp.gmail.com",
+            port=465,
+            username=settings.HOST_USER,
+            password=settings.HOST_PASSWORD,
+            use_tls=True,
+            sender=settings.HOST_USER,
+            recipients=[settings.HOST_USER],
+        )
+    except aiosmtplib.SMTPException as email_error:
+        print(f"Email sending failed: {email_error}")

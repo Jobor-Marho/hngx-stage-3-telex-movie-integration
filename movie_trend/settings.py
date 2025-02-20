@@ -164,4 +164,7 @@ HEADERS = {
 CONTENT_TYPE ={os.environ.get('CONTENT_TYPE')}
 BASE_URL = os.environ.get("BASE_URL")
 
+HOST_USER = os.environ.get("HOST_USER")
+HOST_PASSWORD = os.environ.get("HOST_PASSWORD")
+
 
