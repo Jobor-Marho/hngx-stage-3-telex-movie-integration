@@ -49,13 +49,13 @@ def get_integration_data(request: HttpRequest):
                 #     "default": ""
                 # },
                 {
-                    "label": "number of trending movies",
+                    "label": "number-of-trending-movies",
                     "type": "number",
                     "required": False,
                     "default": 10
                 },
                 {
-                    "label": "preferred language",
+                    "label": "preferred-language",
                     "type": "dropdown",
                     "required": False,
                     "default": "en",
@@ -115,8 +115,9 @@ async def get_top_movies(telex_data):
 
     return_url = telex_data.get("return_url")  # Telex sends this URL for posting results
     api_key = telex_data.get("api_key")  # API key provided by Telex
-    preferred_language = telex_data.get("preferred_language", "en")  # Default to English
-    num_movies = int(telex_data.get("num_movies", 10))  # Get number of movies to fetch
+    num_movies = int(telex_data.get("number-of-trending-movies", 10))
+    preferred_language = telex_data.get("preferred-language", "en")
+    # Get number of movies to fetch
 
     headers = {
         "Content-Type": f"{settings.CONTENT_TYPE}"
