@@ -65,7 +65,7 @@ def get_integration_data(request: HttpRequest):
                     "label": "interval",
                     "type": "text",
                     "required": True,
-                    "default": "* * * * *"  # Default to every 5 minute
+                    "default": "0 0 * * 0"  # Default to every Sunday by 12:00am
                 },
             ],
             "tick_url": f"{base_url}/tick",
