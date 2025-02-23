@@ -15,13 +15,7 @@ MovieTrend fetches trending movies from TMDb, formats the data with titles, rati
 - **Rich Media Support**: Includes movie titles, ratings, overviews, and poster images.
 - **Telex Integration**: Seamlessly sends formatted data to Telex channels.
 - **Customizable**: Configure the number of movies to display via integration settings.
-
-## Requirements
-
-- Python 3.8+
-- `requests` library
-- Django 3.2+
-- [TMDb API Key](https://www.themoviedb.org/settings/api) (free account required)
+- **Customizable**: Customize the language to receive movies data in.
 
 ## Project Structure
 
@@ -31,11 +25,11 @@ movie_trend/
         ├── tests/                # Test cases for the integration
         ├── static/
             ├── logo/
-                ├── logo.png      # Telex integration logo
+                ├── logo.png      # movie_trendapp integration logo
         ├── integrations.json    # Telex integration configuration
     ├── manage.py                 # Django management script
     ├── requirements.txt          # Project dependencies
-
+```
 
 ## Installation & Setup
 
@@ -50,14 +44,7 @@ movie_trend/
    pip install -r requirements.txt
    ```
 
-3. **Set up TMDb API Key**:
-   - Add your API key to `settings.py`:
-     ```python
-     TMDB_API_KEY = 'your_api_key_here'  # Replace with your API key
-     ```
-   - *For production, use environment variables instead of hardcoding.*
-
-4. **Run the development server**:
+3. **Run the development server**:
    ```bash
    python manage.py runserver
    ```
@@ -78,7 +65,7 @@ movie_trend/
 
 ### Configuration
 - Adjust the number of movies fetched in the Telex integration settings.
-- Modify polling frequency via Telex's admin dashboard.
+- Select language preference you want to receive the movies with.
 
 ## Testing
 
@@ -96,10 +83,7 @@ python manage.py test
      gunicorn --workers 3 your_project_name.wsgi:application
      ```
 
-2. **Environment Variables**:
-   - Set `TMDB_API_KEY` in your production environment for security.
-
-3. **Ensure Accessibility**:
+2. **Ensure Accessibility**:
    - Verify the `/tick/` endpoint is publicly accessible to Telex servers.
 
 ## Screenshots
@@ -118,6 +102,4 @@ Pull requests are welcome! For major changes, open an issue first to discuss pro
 ## License
 [MIT](https://choosealicense.com/licenses/mit/) (Add a `LICENSE` file to specify)
 ```
-
----
 
