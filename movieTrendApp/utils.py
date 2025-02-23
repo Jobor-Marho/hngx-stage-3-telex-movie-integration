@@ -176,8 +176,8 @@ async def send_telex_data(url: str, movies: list):
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=data)
 
-        # Send Email Notification using aiosmtplib
-        await send_email_notification()
+        # # Send Email Notification using aiosmtplib
+        # await send_email_notification()
 
         return response.status_code >= 200
 
